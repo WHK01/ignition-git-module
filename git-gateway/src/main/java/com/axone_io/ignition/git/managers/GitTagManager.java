@@ -1,13 +1,11 @@
 package com.axone_io.ignition.git.managers;
 
 import com.inductiveautomation.ignition.common.JsonUtilities;
-import com.inductiveautomation.ignition.common.browsing.BrowseFilter;
 import com.inductiveautomation.ignition.common.gson.JsonElement;
 import com.inductiveautomation.ignition.common.gson.JsonObject;
 import com.inductiveautomation.ignition.common.tags.TagUtilities;
 import com.inductiveautomation.ignition.common.tags.config.CollisionPolicy;
 import com.inductiveautomation.ignition.common.tags.config.TagConfigurationModel;
-import com.inductiveautomation.ignition.common.tags.config.properties.WellKnownTagProps;
 import com.inductiveautomation.ignition.common.tags.model.TagPath;
 import com.inductiveautomation.ignition.common.tags.model.TagProvider;
 import com.inductiveautomation.ignition.common.tags.paths.BasicTagPath;
