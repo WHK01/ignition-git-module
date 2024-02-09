@@ -1,11 +1,13 @@
 package com.axone_io.ignition.git.managers;
 
 import com.inductiveautomation.ignition.common.JsonUtilities;
+import com.inductiveautomation.ignition.common.browsing.BrowseFilter;
 import com.inductiveautomation.ignition.common.gson.JsonElement;
 import com.inductiveautomation.ignition.common.gson.JsonObject;
 import com.inductiveautomation.ignition.common.tags.TagUtilities;
 import com.inductiveautomation.ignition.common.tags.config.CollisionPolicy;
 import com.inductiveautomation.ignition.common.tags.config.TagConfigurationModel;
+import com.inductiveautomation.ignition.common.tags.config.properties.WellKnownTagProps;
 import com.inductiveautomation.ignition.common.tags.model.TagPath;
 import com.inductiveautomation.ignition.common.tags.model.TagProvider;
 import com.inductiveautomation.ignition.common.tags.paths.BasicTagPath;
@@ -77,6 +79,21 @@ public class GitTagManager {
                 Path newFile = tagFolderPath.resolve(tagProvider.getName() + ".json");
 
                 Files.writeString(newFile, TAG_GSON.toJson(sortedJson));
+
+                // add and write udts
+                TagPath udtTypesPath = TagPathParser.parse("", "UdtType");
+                List<TagPath> udtPaths = new ArrayList<>();
+                udtPaths.add(typesPath);
+
+                CompletableFuture<List<TagConfigurationModel>> cfUdtModels =
+                        tagProvider.getTagConfigsAsync(udtPaths, true, true);
+                List<TagConfigurationModel> udtModels = cfUdtModels.get();
+
+                JsonObject udtjson = TagUtilities.toJsonObject(tModels.get(0));
+                JsonElement sortedUdtJson = JsonUtilities.createDeterministicCopy(udtjson);
+
+                Path udtFile = tagFolderPath.resolve(tagProvider.getName() + "_udts.json");
+                Files.writeString(udtFile, TAG_GSON.toJson(sortedUdtJson));
             }
         } catch (Exception e) {
             logger.error(e.toString(), e);
