@@ -35,10 +35,32 @@ public class GitTagManager {
     private final static LoggerEx logger = LoggerEx.newBuilder().build(GitTagManager.class);
 
     public static void importTagManager(String projectName) {
+        // handle udts first
         Path projectDir = getProjectFolderPath(projectName);
-        File tagsProjectDir = projectDir.resolve("tags").toFile();
+        File udtsProjectDir = projectDir.resolve("tags").toFile();
 
         GatewayTagManager gatewayTagManager = context.getTagManager();
+        if (udtsProjectDir.exists()) {
+            File[] files = udtsProjectDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    String udtProviderName = FilenameUtils.removeExtension(file.getName());
+                    TagProvider udtProvider = gatewayTagManager.getTagProvider(udtProviderName);
+                    if (udtProvider != null) {
+                        try {
+                            udtProvider.importTagsAsync(new BasicTagPath(""), FileUtils.readFileToString(file, StandardCharsets.UTF_8.toString()), "JSON", CollisionPolicy.Overwrite, null);
+                        } catch (IOException e) {
+                            logger.warn("An error occurred while importing '" + udtProviderName + "' tags.", e);
+                        }
+                    }
+                }
+            }
+        }
+
+//        Path projectDir = getProjectFolderPath(projectName);
+        File tagsProjectDir = projectDir.resolve("tags").toFile();
+
+//        GatewayTagManager gatewayTagManager = context.getTagManager();
         if (tagsProjectDir.exists()) {
             File[] files = tagsProjectDir.listFiles();
             if (files != null) {
@@ -58,10 +80,10 @@ public class GitTagManager {
     }
 
     public static void exportTag(Path projectFolderPath) {
-        Path tagFolderPath = projectFolderPath.resolve("tags");
-        clearDirectory(tagFolderPath);
 
         try {
+            Path tagFolderPath = projectFolderPath.resolve("tags");
+            clearDirectory(tagFolderPath);
             Files.createDirectories(tagFolderPath);
 
             for (TagProvider tagProvider : context.getTagManager().getTagProviders()) {
@@ -79,17 +101,23 @@ public class GitTagManager {
                 Path newFile = tagFolderPath.resolve(tagProvider.getName() + ".json");
 
                 Files.writeString(newFile, TAG_GSON.toJson(sortedJson));
+            }
 
+            //export udt
+            Path udtFolderPath = projectFolderPath.resolve("udts");
+            clearDirectory(udtFolderPath);
+            Files.createDirectories(udtFolderPath);
+            for (TagProvider tagProvider : context.getTagManager().getTagProviders()) {
                 // add and write udts
                 TagPath udtTypesPath = TagPathParser.parse("", "UdtType");
                 List<TagPath> udtPaths = new ArrayList<>();
-                udtPaths.add(typesPath);
+                udtPaths.add(udtTypesPath);
 
                 CompletableFuture<List<TagConfigurationModel>> cfUdtModels =
                         tagProvider.getTagConfigsAsync(udtPaths, true, true);
                 List<TagConfigurationModel> udtModels = cfUdtModels.get();
 
-                JsonObject udtjson = TagUtilities.toJsonObject(tModels.get(0));
+                JsonObject udtjson = TagUtilities.toJsonObject(udtModels.get(0));
                 JsonElement sortedUdtJson = JsonUtilities.createDeterministicCopy(udtjson);
 
                 Path udtFile = tagFolderPath.resolve(tagProvider.getName() + "_udts.json");
