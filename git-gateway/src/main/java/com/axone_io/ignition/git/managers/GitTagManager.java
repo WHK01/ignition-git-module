@@ -1,17 +1,11 @@
 package com.axone_io.ignition.git.managers;
 
 import com.inductiveautomation.ignition.common.JsonUtilities;
-import com.inductiveautomation.ignition.common.browsing.BrowseFilter;
-import com.inductiveautomation.ignition.common.browsing.Results;
 import com.inductiveautomation.ignition.common.gson.JsonElement;
 import com.inductiveautomation.ignition.common.gson.JsonObject;
 import com.inductiveautomation.ignition.common.tags.TagUtilities;
-import com.inductiveautomation.ignition.common.tags.browsing.NodeAttribute;
-import com.inductiveautomation.ignition.common.tags.browsing.NodeDescription;
 import com.inductiveautomation.ignition.common.tags.config.CollisionPolicy;
 import com.inductiveautomation.ignition.common.tags.config.TagConfigurationModel;
-import com.inductiveautomation.ignition.common.tags.config.properties.WellKnownTagProps;
-import com.inductiveautomation.ignition.common.tags.model.TagConstants;
 import com.inductiveautomation.ignition.common.tags.model.TagPath;
 import com.inductiveautomation.ignition.common.tags.model.TagProvider;
 import com.inductiveautomation.ignition.common.tags.paths.BasicTagPath;
@@ -27,10 +21,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 import static com.axone_io.ignition.git.GatewayHook.context;
 import static com.axone_io.ignition.git.managers.GitManager.clearDirectory;
@@ -101,44 +94,15 @@ public class GitTagManager {
                         tagProvider.getTagConfigsAsync(tagPaths, true, true);
                 List<TagConfigurationModel> tModels = cfTagModels.get();
 
+                // Reverse list order
+                Collections.reverse(tModels);
+
                 JsonObject json = TagUtilities.toJsonObject(tModels.get(0));
                 JsonElement sortedJson = JsonUtilities.createDeterministicCopy(json);
 
                 Path newFile = tagFolderPath.resolve(tagProvider.getName() + ".json");
 
                 Files.writeString(newFile, TAG_GSON.toJson(sortedJson));
-            }
-
-            //export udt
-
-            Path udtFolderPath = projectFolderPath.resolve("udts");
-            clearDirectory(udtFolderPath);
-            Files.createDirectories(udtFolderPath);
-            for (TagProvider tagProvider : context.getTagManager().getTagProviders()) {
-                // add and write udts
-                BrowseFilter browseFilter = new BrowseFilter();
-                browseFilter.setRecursive(true);
-                browseFilter.addProperty(WellKnownTagProps.TagType, "UdtType");
-                Results<NodeDescription> results = tagProvider.browseAsync(TagConstants.UDT_ROOT_PATH, browseFilter).join();
-                List<TagPath> udtPaths = new ArrayList<>();
-                for (NodeDescription result : results.getResults()) {
-                    // get the udt path
-                    Set<NodeAttribute> udtAttrs = result.getAttributes();
-                    TagPath udtPath = udtAttrs.
-
-//                    TagPath udtTypesPath = TagPathParser.parse("", "UdtType");
-                    udtPaths.add(udtPath);
-
-                }
-
-                CompletableFuture<List<TagConfigurationModel>> cfUdtModels =
-                        tagProvider.getTagConfigsAsync(udtPaths, true, true);
-                List<TagConfigurationModel> udtModels = cfUdtModels.get();
-                JsonObject udtjson = TagUtilities.toJsonObject(udtModels.get(0));
-                JsonElement sortedUdtJson = JsonUtilities.createDeterministicCopy(udtjson);
-
-                Path udtFile = udtFolderPath.resolve(tagProvider.getName() + ".json");
-                Files.writeString(udtFile, TAG_GSON.toJson(sortedUdtJson));
             }
         } catch (Exception e) {
             logger.error(e.toString(), e);
