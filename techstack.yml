@@ -1,0 +1,197 @@
+repo_name: WhiskeyHouse/ignition-git-module
+report_id: c9b5334ac59ef9dce26e621462ea607c
+version: 0.1
+repo_type: Public
+timestamp: '2024-03-14T00:51:43+00:00'
+requested_by: pmannion2
+provider: github
+branch: main
+detected_tools_count: 11
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module
+  detection_source: Repo Metadata
+- name: Swift
+  description: An innovative new programming language for Cocoa and Cocoa Touch.
+  website_url: https://developer.apple.com/swift/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1009/tuHsaI2U.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/docker/gw-build/Dockerfile
+  detection_source: docker/gw-build/Dockerfile
+  last_updated_by: AXONE-IO
+  last_updated_on: 2023-04-27 14:20:38.000000000 Z
+- name: Docker
+  description: Enterprise Container Platform for High-Velocity Innovation.
+  website_url: https://www.docker.com/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Platforms & Containers
+  image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/.github/workflows/ci-ignition-git-module.yml
+  detection_source: ".github/workflows/ci-ignition-git-module.yml"
+  last_updated_by: Patrick Mannion
+  last_updated_on: 2024-01-17 14:51:14.000000000 Z
+- name: JUnit
+  description: A programmer-oriented testing framework for Java
+  website_url: http://junit.org/
+  version: '4.12'
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/git-gateway/pom.xml
+  detection_source: git-gateway/pom.xml
+  last_updated_by: AXONE-IO
+  last_updated_on: 2023-04-04 16:01:31.000000000 Z
+- name: CocoaPods
+  description: A dependency manager for Swift and Objective-C Cocoa projects
+  website_url: https://cocoapods.org/
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: CocoaPods Packages
+  image_url: https://img.stackshare.io/service/2426/e1cbdef9d4b11484049a033886578e54_400x400.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/docker/gw-build/Dockerfile
+  detection_source: docker/gw-build/Dockerfile
+  last_updated_by: AXONE-IO
+  last_updated_on: 2023-04-27 14:20:38.000000000 Z
+- name: Shell
+  description: A shell is a text-based terminal, used for manipulating programs and
+    files. Shell scripts typically manage program execution.
+  website_url: https://en.wikipedia.org/wiki/Shell_script
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module
+  detection_source: Repo Metadata
+- name: junit:junit
+  description: JUnit is a unit testing framework for Java
+  version: '4.12'
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/git-gateway/pom.xml
+  detection_source: git-gateway/pom.xml
+  last_updated_by: pmannion2
+  last_updated_on: 2024-02-01 12:43:44.000000000 Z
+  vulnerabilities:
+  - name: TemporaryFolder on unix-like systems does not limit access to created files
+    cve_id: CVE-2020-15250
+    cve_url: https://github.com/advisories/GHSA-269g-pwp5-87pp
+    detected_date: Aug 22
+    severity: moderate
+    first_patched: 4.13.1
+- name: org.projectlombok:lombok
+  description: 'Spice up your java: Automatic Resource Management'
+  version: 1.18.30
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/git-designer/pom.xml
+  detection_source: git-designer/pom.xml
+  last_updated_by: vakaris-u
+  last_updated_on: 2023-12-06 09:47:07.000000000 Z
+- name: org.yaml:snakeyaml
+  description: YAML 1.1 parser and emitter for Java
+  version: '1.29'
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/WhiskeyHouse/ignition-git-module/blob/main/git-gateway/pom.xml
+  detection_source: git-gateway/pom.xml
+  last_updated_by: pmannion2
+  last_updated_on: 2024-02-01 03:16:05.000000000 Z
+  vulnerabilities:
+  - name: SnakeYaml Constructor Deserialization Remote Code Execution
+    cve_id: CVE-2022-1471
+    cve_url: https://github.com/advisories/GHSA-mjmj-j48q-9wg2
+    detected_date: Dec 13
+    severity: high
+    first_patched: '2.0'
+  - name: Uncontrolled Resource Consumption in snakeyaml
+    cve_id: CVE-2022-25857
+    cve_url: https://github.com/advisories/GHSA-3mc7-4q67-w48m
+    detected_date: Sep 10
+    severity: high
+    first_patched: '1.31'
+  - name: snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds
+      Write
+    cve_id: CVE-2022-38750
+    cve_url: https://github.com/advisories/GHSA-hhhw-99gj-p3c3
+    detected_date: Sep 17
+    severity: moderate
+    first_patched: '1.31'
+  - name: snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds
+      Write
+    cve_id: CVE-2022-38749
+    cve_url: https://github.com/advisories/GHSA-c4r9-r8fh-9vj2
+    detected_date: Sep 15
+    severity: moderate
+    first_patched: '1.31'
+  - name: snakeYAML before 1.32 vulnerable to Denial of Service due to Out-of-bounds
+      Write
+    cve_id: CVE-2022-38752
+    cve_url: https://github.com/advisories/GHSA-9w3m-gqgf-c4p9
+    detected_date: Sep 14
+    severity: moderate
+    first_patched: '1.32'
+  - name: Snakeyaml vulnerable to Stack overflow leading to denial of service
+    cve_id: CVE-2022-41854
+    cve_url: https://github.com/advisories/GHSA-w37g-rhq8-7m4j
+    detected_date: Nov 22
+    severity: moderate
+    first_patched: '1.32'
+  - name: snakeYAML before 1.31 vulnerable to Denial of Service due to Out-of-bounds
+      Write
+    cve_id: CVE-2022-38751
+    cve_url: https://github.com/advisories/GHSA-98wm-3w3q-mw94
+    detected_date: Sep 17
+    severity: moderate
+    first_patched: '1.31'
